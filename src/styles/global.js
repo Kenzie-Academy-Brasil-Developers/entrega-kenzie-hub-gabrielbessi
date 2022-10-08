@@ -16,13 +16,18 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     input, select{
+        display: flex;
+        padding-left:16px ;
         
         background: var(--color-grey2);
         border: 1.2182 solid var(--color-grey0); 
         align-items: center;       
-      
+        
+        min-width: 280px;
         width: 22.793606671299514vw;    
         height: 48px;
+
+        border-radius: 4px;
 
 
     } 

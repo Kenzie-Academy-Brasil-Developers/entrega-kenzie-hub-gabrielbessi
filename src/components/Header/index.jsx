@@ -1,13 +1,14 @@
-import { Link } from "react-router-dom";
+import imageLogo from "../../images/Logo.svg";
+import { HeaderPage, LinkHome as Link } from "./styles";
 
 const Header = () => {
   return (
-    <header>
-      <p>Kenzie hub</p>
+    <HeaderPage>
+      <img src={imageLogo} alt="" />
       <div>
         <Link to={"/"}>Sair</Link>
       </div>
-    </header>
+    </HeaderPage>
   );
 };
 
