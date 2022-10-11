@@ -41,24 +41,26 @@ const Registration = () => {
     delete data.password_confirm;
     api
       .post("/users", data)
-      .then(
-        () =>
+      .then(() => {
+        return (
           toast.success("Conta criada com sucesso!", {
             position: "top-center",
             autoClose: 1500,
             hideProgressBar: false,
           }),
-        navigate("/")
-      )
-      .catch(
-        () =>
+          navigate("/")
+        );
+      })
+      .catch(() => {
+        return (
           toast.error("Ops! Algo deu errado", {
             position: "top-center",
             autoClose: 1500,
             hideProgressBar: false,
           }),
-        navigate("/registration")
-      );
+          navigate("/registration")
+        );
+      });
   }
 
   return (
