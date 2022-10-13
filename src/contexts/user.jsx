@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import api from "../services/api";
 import { toast } from "react-toastify";
+import { formSchema } from "./../validation/index";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 export const UserContext = createContext({});
 
@@ -31,8 +33,53 @@ export function UserProvider({ children }) {
         })
       );
   }
+
+  const {
+    register: registerRegistration,
+    handleSubmit: handleSubmitRegistration,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(formSchema),
+  });
+
+  function onRegister(data) {
+    delete data.password_confirm;
+    api
+      .post("/users", data)
+      .then(() => {
+        return (
+          toast.success("Conta criada com sucesso!", {
+            position: "top-center",
+            autoClose: 1500,
+            hideProgressBar: false,
+          }),
+          navigate("/")
+        );
+      })
+      .catch(() => {
+        return (
+          toast.error("Ops! Algo deu errado", {
+            position: "top-center",
+            autoClose: 1500,
+            hideProgressBar: false,
+          }),
+          navigate("/registration")
+        );
+      });
+  }
+
   return (
-    <UserContext.Provider value={{ handleSubmit, register, onForm }}>
+    <UserContext.Provider
+      value={{
+        handleSubmit,
+        register,
+        onForm,
+        registerRegistration,
+        handleSubmitRegistration,
+        onRegister,
+        errors,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );
