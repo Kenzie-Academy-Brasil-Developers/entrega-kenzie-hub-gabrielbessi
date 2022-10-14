@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import api from "../services/api";
@@ -11,18 +11,41 @@ export const UserContext = createContext({});
 export function UserProvider({ children }) {
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const token = localStorage.getItem("kenzie-hub:token");
+
+    async function loadUser() {
+      if (token) {
+        try {
+          api.defaults.headers.authorization = `Bearer ${token}`;
+
+          const { data } = await api.get("/profile");
+
+          setUser(data);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+      setLoading(false);
+    }
+
+    loadUser();
+  }, []);
 
   function onForm(data) {
-    console.log(data);
-
     api
       .post("/sessions", data)
       .then((response) => {
-        console.log(response);
-        const { token, user } = response.data;
+        const { token } = response.data;
+
         localStorage.setItem("kenzie-hub:token", token);
-        api.defaults.headers.common["Authorization"] = token;
-        localStorage.setItem("kenzie-hub:user", JSON.stringify(user));
+
+        api.defaults.headers.authorization = `Bearer ${token}`;
+
         navigate("/homepage");
       })
       .catch(() =>
@@ -78,6 +101,8 @@ export function UserProvider({ children }) {
         handleSubmitRegistration,
         onRegister,
         errors,
+        user,
+        loading,
       }}
     >
       {children}

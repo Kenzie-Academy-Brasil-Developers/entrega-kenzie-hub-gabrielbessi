@@ -1,23 +1,14 @@
 import Header from "../../components/Header";
 import { SectionHomePage } from "./styles";
-import { useEffect, useState } from "react";
-import api from "../../services/api";
+import { useContext } from "react";
+import { UserContext } from "./../../contexts/user";
 
 const HomePage = () => {
-  const [token, setToken] = useState(
-    localStorage.getItem("kenzie-hub:token") || null
-  );
+  const { user, loading } = useContext(UserContext);
 
-  const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("kenzie-hub:user")) || null
-  );
-  console.log(token);
-
-  useEffect(() => {
-    if (token) {
-      api.defaults.headers.common["Authorization"] = token;
-    }
-  }, []);
+  if (loading) {
+    return null;
+  }
 
   return (
     <>
