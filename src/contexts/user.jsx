@@ -36,7 +36,7 @@ export function UserProvider({ children }) {
     }
 
     loadUser();
-  }, []);
+  }, [user]);
 
   function onForm(data) {
     api

@@ -56,6 +56,8 @@ export const SectionHomePage = styled.section`
     height: 55vh;
     width: 55vw;
 
+    overflow-y: scroll;
+
     justify-content: center;
     padding: 26px;
     margin-top: 21px;
@@ -63,5 +65,15 @@ export const SectionHomePage = styled.section`
     background-color: var(--color-grey3);
 
     border-radius: 4px;
+  }
+  .textConted::-webkit-scrollbar {
+    width: 10px;
+    border: 1px solid var(--color-grey3);
+    border-radius: 0px, 5px, 5px, 0px;
+  }
+
+  .textConted::-webkit-scrollbar-thumb {
+    background-color: var(--color-grey2);
+    border-radius: 0px, 5px, 5px, 0px;
   }
 `;

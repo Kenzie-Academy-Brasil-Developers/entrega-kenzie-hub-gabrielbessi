@@ -21,7 +21,9 @@ export const GlobalStyle = createGlobalStyle`
         
         background: var(--color-grey2);
         border: 1.2182 solid var(--color-grey0); 
-        align-items: center;       
+        align-items: center;   
+        
+        color: var(--color-white);
         
         min-width: 280px;
         width: 22.793606671299514vw;    

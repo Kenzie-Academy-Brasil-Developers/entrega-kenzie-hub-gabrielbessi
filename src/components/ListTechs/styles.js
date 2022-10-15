@@ -2,9 +2,13 @@ import styled from "styled-components";
 
 export const TechsStyle = styled.ul`
   display: flex;
+  flex-direction: column;
+
+  gap: 16px;
 
   li {
     display: flex;
+
     justify-content: space-between;
 
     align-items: center;

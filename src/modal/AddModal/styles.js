@@ -63,6 +63,12 @@ export const ModalRegistrationTechs = styled.div`
       gap: 10px;
 
       height: 28vh;
+
+      select {
+        display: flex;
+
+        margin-bottom: 10px;
+      }
     }
   }
 `;
