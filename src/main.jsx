@@ -5,13 +5,16 @@ import { GlobalStyle } from "./styles/global";
 import { UserProvider } from "./contexts/user";
 import App from "./App";
 import "./index.css";
+import { TechProvider } from "./contexts/tech";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <GlobalStyle />
       <UserProvider>
-        <App />
+        <TechProvider>
+          <App />
+        </TechProvider>
       </UserProvider>
     </BrowserRouter>
   </React.StrictMode>

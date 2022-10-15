@@ -20,16 +20,48 @@ export const SectionHomePage = styled.section`
     justify-content: space-evenly;
   }
 
+  .textTecnology {
+    display: flex;
+
+    min-width: 300px;
+    width: 55vw;
+    height: 32px;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 11px;
+
+    button {
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      width: 32px;
+      height: 32px;
+
+      background-color: var(--color-grey3);
+      color: var(--color-white);
+
+      border-radius: 4px;
+    }
+  }
+
   .textConted {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 
-    align-items: flex-start;
+    min-width: 300px;
+    height: 55vh;
+    width: 55vw;
 
-    height: 100vh;
-    width: 90vw;
+    justify-content: center;
+    padding: 26px;
+    margin-top: 21px;
 
-    gap: 10px;
-    margin-top: 37px;
+    background-color: var(--color-grey3);
+
+    border-radius: 4px;
   }
 `;

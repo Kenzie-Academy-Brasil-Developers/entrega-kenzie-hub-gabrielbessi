@@ -1,10 +1,11 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import api from "../services/api";
 import { toast } from "react-toastify";
 import { formSchema } from "./../validation/index";
 import { yupResolver } from "@hookform/resolvers/yup";
+
+import api from "../services/api";
 
 export const UserContext = createContext({});
 
@@ -12,6 +13,7 @@ export function UserProvider({ children }) {
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
   const [user, setUser] = useState(null);
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
