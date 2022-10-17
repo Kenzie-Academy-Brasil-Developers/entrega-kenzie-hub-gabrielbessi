@@ -46,6 +46,10 @@ export const SectionHomePage = styled.section`
 
       border-radius: 4px;
     }
+
+    button:hover {
+      filter: brightness(1.3);
+    }
   }
 
   .textConted {

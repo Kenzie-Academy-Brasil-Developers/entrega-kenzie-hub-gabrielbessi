@@ -1,5 +1,6 @@
 import { createContext, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import api from "../services/api";
 
 export const TechContext = createContext({});
@@ -12,28 +13,60 @@ export function TechProvider({ children }) {
 
   const token = localStorage.getItem("kenzie-hub:token");
 
-  function onFormRegistration(data) {
-    api.defaults.headers.authorization = `Bearer ${token}`;
+  async function onFormRegistration(data) {
+    try {
+      api.defaults.headers.authorization = `Bearer ${token}`;
 
-    api.post("/users/techs", data);
+      await api.post("/users/techs", data);
 
-    setModalIsOpen(false);
+      setModalIsOpen(false);
+      toast.success("Adicionado com sucesso", {
+        position: "top-center",
+        autoClose: 1500,
+        hideProgressBar: false,
+      });
+    } catch (error) {
+      console.log(error);
+      toast.error("Ops! Tecnologia existente !", {
+        position: "top-center",
+        autoClose: 1500,
+        hideProgressBar: false,
+      });
+    }
   }
 
-  function removeTech(id) {
-    api.defaults.headers.authorization = `Bearer ${token}`;
+  async function removeTech(id) {
+    try {
+      api.defaults.headers.authorization = `Bearer ${token}`;
 
-    api.delete(`/users/techs/${id}`);
+      await api.delete(`/users/techs/${id}`);
 
-    setUpdateModal(false);
+      setUpdateModal(false);
+      toast.success("Removido com sucesso", {
+        position: "top-center",
+        autoClose: 1500,
+        hideProgressBar: false,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
-  function updateTech(data) {
-    api.defaults.headers.authorization = `Bearer ${token}`;
+  async function updateTech(data) {
+    try {
+      api.defaults.headers.authorization = `Bearer ${token}`;
 
-    api.put(`/users/techs/${idTech}`, data);
+      await api.put(`/users/techs/${idTech}`, data);
 
-    setUpdateModal(false);
+      setUpdateModal(false);
+      toast.success("Atualizado com sucesso", {
+        position: "top-center",
+        autoClose: 1500,
+        hideProgressBar: false,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (

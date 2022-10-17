@@ -50,12 +50,14 @@ export function UserProvider({ children }) {
 
         navigate("/homepage");
       })
-      .catch(() =>
-        toast.error("Email/senha inválido", {
-          position: "top-center",
-          autoClose: 1500,
-          hideProgressBar: false,
-        })
+      .catch(
+        () =>
+          toast.error("Email/senha inválido", {
+            position: "top-center",
+            autoClose: 1500,
+            hideProgressBar: false,
+          }),
+        localStorage.clear()
       );
   }
 
