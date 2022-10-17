@@ -1,12 +1,13 @@
 import { useContext } from "react";
-import { TechContext } from "../../contexts/Tech";
+import { TechContext } from "../../contexts/tech";
 import { UserContext } from "../../contexts/user";
 import { TechsStyle } from "./styles";
-import { BsTrashFill } from "react-icons/bs";
+import { GiEntryDoor } from "react-icons/gi";
 
 const ListTechs = () => {
   const { user } = useContext(UserContext);
-  const { removeTech } = useContext(TechContext);
+  const { setUpdateModal, setTechId } = useContext(TechContext);
+
   return (
     <TechsStyle>
       {user.techs.map(({ title, status, id }) => (
@@ -14,8 +15,13 @@ const ListTechs = () => {
           <p>{title}</p>
           <div>
             <span>{status}</span>
-            <button onClick={() => removeTech(id)}>
-              <BsTrashFill />
+            <button
+              onClick={() => {
+                setUpdateModal(true);
+                setTechId(id);
+              }}
+            >
+              <GiEntryDoor />
             </button>
           </div>
         </li>

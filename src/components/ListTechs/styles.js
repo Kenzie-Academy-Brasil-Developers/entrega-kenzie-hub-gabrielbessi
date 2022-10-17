@@ -31,6 +31,22 @@ export const TechsStyle = styled.ul`
 
       gap: 25px;
     }
+
+    button {
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      width: 20px;
+      height: 20px;
+
+      color: var(--color-white);
+    }
+
+    button:hover {
+      filter: brightness(1.8);
+    }
   }
 
   li:hover {

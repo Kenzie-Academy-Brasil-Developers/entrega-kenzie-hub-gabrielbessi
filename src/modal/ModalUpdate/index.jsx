@@ -1,30 +1,58 @@
 import { useContext } from "react";
-import { TechContext } from "../../contexts/Tech";
+import { TechContext } from "../../contexts/tech";
+import { ModalUpdateTechs } from "./styles";
+import { SlClose } from "react-icons/sl";
 
 const ModalUpdate = () => {
-  const { setUpdateOpen } = useContext(TechContext);
+  const {
+    id = "modal",
+    removeTech,
+    setUpdateModal,
+    idTech,
+    updateTech,
+    handleSubmit,
+    register,
+  } = useContext(TechContext);
+
+  function outSideClick(event) {
+    if (event.target.id === id) setUpdateModal(false);
+  }
+
   return (
-    <div className="modal">
-      <div>
+    <ModalUpdateTechs id={id} onClick={outSideClick}>
+      <div className="closeModal">
         <span>Atualizar tecnologias</span>
-        <button onClick={() => setUpdateOpen(false)}>fechar</button>
+        <button onClick={() => setUpdateModal(false)}>
+          <SlClose />
+        </button>
       </div>
-      <div className="">
-        <div className="">
-          <form action="">
+      <div className="container">
+        <div className="content">
+          <form action="" onSubmit={handleSubmit(updateTech)}>
             <label htmlFor="">Atualizar status</label>
-            <select name="" id="">
+            <select name="" id="" {...register("status")}>
               <option value="">Selecione</option>
               <option value="Iniciante">Iniciante</option>
               <option value="Intermediário">Intermediário</option>
               <option value="Avançado">Avançado</option>
             </select>
-            <button type="submit">Salvar alterações</button>
-            <button type="button"> Excluir</button>
+
+            <div className="containerButtons">
+              <button className="buttonSave" type="submit">
+                Salvar alterações
+              </button>
+              <button
+                onClick={() => removeTech(idTech)}
+                className="buttonDelete"
+                type="button"
+              >
+                Excluir
+              </button>
+            </div>
           </form>
         </div>
       </div>
-    </div>
+    </ModalUpdateTechs>
   );
 };
 
