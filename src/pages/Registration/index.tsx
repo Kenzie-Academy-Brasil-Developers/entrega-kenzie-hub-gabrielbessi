@@ -3,11 +3,32 @@ import { FormRegistration, HeaderForm } from "./style";
 import { LinkRegistration as Link } from "./style";
 import imageLogo from "../../images/Logo.svg";
 import { useContext } from "react";
-import { UserContext } from "./../../contexts/user";
+import { UserContext } from "../../contexts/user";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import { formSchema } from "../../validation";
+
+export interface iUserRegistration {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+  password_confirm?: string;
+  bio: string;
+  contact: string | number;
+  course_module: string;
+}
 
 const Registration = () => {
-  const { registerRegistration, handleSubmitRegistration, onRegister, errors } =
-    useContext(UserContext);
+  const { onRegister } = useContext(UserContext);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<iUserRegistration>({
+    resolver: yupResolver(formSchema),
+  });
 
   return (
     <>
@@ -21,26 +42,26 @@ const Registration = () => {
           <span>Rápido e grátis, vamos nessa</span>
         </div>
         <div>
-          <form onSubmit={handleSubmitRegistration(onRegister)}>
+          <form onSubmit={handleSubmit(onRegister)}>
             <label htmlFor="">Name</label>
             <input
               type="text"
               placeholder="Digite aqui seu nome"
-              {...registerRegistration("name")}
+              {...register("name")}
             />
             <p>{errors.name?.message}</p>
             <label htmlFor="">Email</label>
             <input
               type="text"
               placeholder="Digite aqui seu email"
-              {...registerRegistration("email")}
+              {...register("email")}
             />
             <p>{errors.email?.message}</p>
             <label htmlFor="">Senha</label>
             <input
               type="password"
               placeholder="Digite aqui sua senha"
-              {...registerRegistration("password")}
+              {...register("password")}
             />
             <p>{errors.password?.message}</p>
 
@@ -48,7 +69,7 @@ const Registration = () => {
             <input
               type="password"
               placeholder="Digite novamente sua senha"
-              {...registerRegistration("password_confirm")}
+              {...register("password_confirm")}
             />
             <p>{errors.password_confirm?.message}</p>
 
@@ -56,17 +77,17 @@ const Registration = () => {
             <input
               type="text"
               placeholder="Fale sobre você"
-              {...registerRegistration("bio")}
+              {...register("bio")}
             />
             <p>{errors.bio?.message}</p>
             <label htmlFor="">Contato</label>
             <input
               type="text"
               placeholder="Opção de contato"
-              {...registerRegistration("contact")}
+              {...register("contact")}
             />
             <label htmlFor="">Selecione o módulo</label>
-            <select name="" id="" {...registerRegistration("course_module")}>
+            <select id="" {...register("course_module")}>
               <option value="">Selecione</option>
               <option value="Primeiro módulo (Introdução ao Frontend)">
                 Primeiro módulo

@@ -1,19 +1,50 @@
-import { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { formSchema } from "./../validation/index";
-import { yupResolver } from "@hookform/resolvers/yup";
 
 import api from "../services/api";
+import { iUseFormLogin } from "../pages/Login";
+import { iUserRegistration } from "../pages/Registration";
 
-export const UserContext = createContext({});
+interface iUserProviderProps {
+  children: React.ReactNode;
+}
 
-export function UserProvider({ children }) {
+export interface iUserLoggedTechs {
+  id: number;
+  title: string;
+  status: string;
+}
+interface iUserLoggedWorks {
+  title: string;
+  description: string;
+  deploy_url: string;
+}
+
+export interface iUserLogged {
+  id: number;
+  name: string;
+  email: string;
+  course_module: string;
+  bio: string;
+  contact: string | number;
+  techs?: iUserLoggedTechs[];
+  works?: iUserLoggedWorks[];
+}
+
+interface iUserContext {
+  user: iUserLogged;
+  onForm(data: iUseFormLogin): void;
+  onRegister(data: iUserRegistration): void;
+  loading: boolean;
+}
+
+export const UserContext = createContext<iUserContext>({} as iUserContext);
+
+export function UserProvider({ children }: iUserProviderProps) {
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm();
-  const [user, setUser] = useState(null);
 
+  const [user, setUser] = useState<iUserLogged>({} as iUserLogged);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -24,7 +55,7 @@ export function UserProvider({ children }) {
         try {
           api.defaults.headers.authorization = `Bearer ${token}`;
 
-          const { data } = await api.get("/profile");
+          const { data } = await api.get<iUserLogged>("/profile");
 
           setUser(data);
         } catch (error) {
@@ -38,7 +69,7 @@ export function UserProvider({ children }) {
     loadUser();
   }, [user]);
 
-  function onForm(data) {
+  function onForm(data: iUseFormLogin): void {
     api
       .post("/sessions", data)
       .then((response) => {
@@ -50,26 +81,16 @@ export function UserProvider({ children }) {
 
         navigate("/homepage");
       })
-      .catch(
-        () =>
-          toast.error("Email/senha inválido", {
-            position: "top-center",
-            autoClose: 1500,
-            hideProgressBar: false,
-          }),
-        localStorage.clear()
+      .catch(() =>
+        toast.error("Email/senha inválido", {
+          position: "top-center",
+          autoClose: 1500,
+          hideProgressBar: false,
+        })
       );
   }
 
-  const {
-    register: registerRegistration,
-    handleSubmit: handleSubmitRegistration,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(formSchema),
-  });
-
-  function onRegister(data) {
+  function onRegister(data: iUserRegistration): void {
     delete data.password_confirm;
     api
       .post("/users", data)
@@ -98,13 +119,8 @@ export function UserProvider({ children }) {
   return (
     <UserContext.Provider
       value={{
-        handleSubmit,
-        register,
         onForm,
-        registerRegistration,
-        handleSubmitRegistration,
         onRegister,
-        errors,
         user,
         loading,
       }}

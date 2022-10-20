@@ -7,7 +7,7 @@ export const formSchema = yup.object().shape({
     .string()
     .required("Senha obrigatória")
     .matches(
-      "^(?=.*[A-Z])(?=.*[!#@$%&])(?=.*[0-9])(?=.*[a-z]).{6,15}$",
+      /^(?=.*[A-Z])(?=.*[!#@$%&])(?=.*[0-9])(?=.*[a-z]).{6,15}$/,
       "Mínimo 8 caracteres. Conter letras, números e ao menos um símbolo"
     ),
   password_confirm: yup

@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { TechContext } from "../../contexts/tech";
-import { UserContext } from "../../contexts/user";
+import { iUserLoggedTechs, UserContext } from "../../contexts/user";
 import { TechsStyle } from "./styles";
 import { GiEntryDoor } from "react-icons/gi";
 
@@ -10,7 +10,7 @@ const ListTechs = () => {
 
   return (
     <TechsStyle>
-      {user.techs.map(({ title, status, id }) => (
+      {user.techs?.map(({ title, status, id }: iUserLoggedTechs) => (
         <li key={id}>
           <p>{title}</p>
           <div>

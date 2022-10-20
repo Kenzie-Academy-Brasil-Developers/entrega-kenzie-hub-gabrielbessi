@@ -2,24 +2,24 @@ import { useContext } from "react";
 import { TechContext } from "../../contexts/tech";
 import { ModalUpdateTechs } from "./styles";
 import { SlClose } from "react-icons/sl";
+import { useForm } from "react-hook-form";
+
+export interface iUpdateTech {
+  status: string;
+}
 
 const ModalUpdate = () => {
-  const {
-    id = "modal",
-    removeTech,
-    setUpdateModal,
-    idTech,
-    updateTech,
-    handleSubmit,
-    register,
-  } = useContext(TechContext);
+  const { removeTech, setUpdateModal, idTech, updateTech } =
+    useContext(TechContext);
 
-  function outSideClick(event) {
-    if (event.target.id === id) setUpdateModal(false);
+  const { register, handleSubmit } = useForm<iUpdateTech>();
+
+  function outSideClick(event: any) {
+    if (event.target.id === "modal") setUpdateModal(false);
   }
 
   return (
-    <ModalUpdateTechs id={id} onClick={outSideClick}>
+    <ModalUpdateTechs id="modal" onClick={outSideClick}>
       <div className="closeModal">
         <span>Atualizar tecnologias</span>
         <button onClick={() => setUpdateModal(false)}>
@@ -30,7 +30,7 @@ const ModalUpdate = () => {
         <div className="content">
           <form action="" onSubmit={handleSubmit(updateTech)}>
             <label htmlFor="">Atualizar status</label>
-            <select name="" id="" {...register("status")}>
+            <select id="" {...register("status")}>
               <option value="">Selecione</option>
               <option value="Iniciante">Iniciante</option>
               <option value="Intermediário">Intermediário</option>

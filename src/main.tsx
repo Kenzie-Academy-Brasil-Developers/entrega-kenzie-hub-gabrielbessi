@@ -7,7 +7,7 @@ import App from "./App";
 import "./index.css";
 import { TechProvider } from "./contexts/tech";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
       <GlobalStyle />

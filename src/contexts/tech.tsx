@@ -1,19 +1,40 @@
-import { createContext, useState } from "react";
-import { useForm } from "react-hook-form";
+import { createContext, ReactNode, useState } from "react";
 import { toast } from "react-toastify";
+import { iTechs } from "../modal/AddModal";
+import { iUpdateTech } from "../modal/ModalUpdate";
 import api from "../services/api";
 
-export const TechContext = createContext({});
+interface iTechProviderProps {
+  children: ReactNode;
+}
 
-export function TechProvider({ children }) {
+interface iTechContext {
+  onFormRegistration(data: iTechs): Promise<void>;
+
+  updateTech(data: iUpdateTech): Promise<void>;
+
+  removeTech(id: number): Promise<void>;
+
+  modalIsOpen: boolean;
+
+  idTech: number;
+
+  setTechId: React.Dispatch<React.SetStateAction<number>>;
+  setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  updateModal: boolean;
+  setUpdateModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const TechContext = createContext<iTechContext>({} as iTechContext);
+
+export function TechProvider({ children }: iTechProviderProps) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [updateModal, setUpdateModal] = useState(false);
   const [idTech, setTechId] = useState(0);
-  const { register, handleSubmit } = useForm([]);
 
   const token = localStorage.getItem("kenzie-hub:token");
 
-  async function onFormRegistration(data) {
+  async function onFormRegistration(data: iTechs): Promise<void> {
     try {
       api.defaults.headers.authorization = `Bearer ${token}`;
 
@@ -35,11 +56,11 @@ export function TechProvider({ children }) {
     }
   }
 
-  async function removeTech(id) {
+  async function removeTech(idTech: number): Promise<void> {
     try {
       api.defaults.headers.authorization = `Bearer ${token}`;
 
-      await api.delete(`/users/techs/${id}`);
+      await api.delete(`/users/techs/${idTech}`);
 
       setUpdateModal(false);
       toast.success("Removido com sucesso", {
@@ -52,7 +73,7 @@ export function TechProvider({ children }) {
     }
   }
 
-  async function updateTech(data) {
+  async function updateTech(data: iUpdateTech): Promise<void> {
     try {
       api.defaults.headers.authorization = `Bearer ${token}`;
 
@@ -74,8 +95,6 @@ export function TechProvider({ children }) {
       value={{
         setModalIsOpen,
         modalIsOpen,
-        handleSubmit,
-        register,
         onFormRegistration,
         removeTech,
         updateModal,

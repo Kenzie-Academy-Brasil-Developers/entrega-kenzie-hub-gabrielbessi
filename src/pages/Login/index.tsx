@@ -2,10 +2,17 @@ import { ButtonStyled } from "../../components/Button";
 import { FormBorder, LinkStyled as Linked, SectionLogin } from "./styles";
 import imageLogo from "../../images/Logo.svg";
 import { useContext } from "react";
-import { UserContext } from "./../../contexts/user";
+import { UserContext } from "../../contexts/user";
+import { useForm } from "react-hook-form";
+
+export interface iUseFormLogin {
+  email: string;
+  password: string;
+}
 
 const Login = () => {
-  const { handleSubmit, register, onForm } = useContext(UserContext);
+  const { onForm } = useContext(UserContext);
+  const { register, handleSubmit } = useForm<iUseFormLogin>();
 
   return (
     <>

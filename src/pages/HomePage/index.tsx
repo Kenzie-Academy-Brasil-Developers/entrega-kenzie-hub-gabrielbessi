@@ -3,7 +3,7 @@ import ListTechs from "../../components/ListTechs";
 import AddModal from "../../modal/AddModal";
 import { SectionHomePage } from "./styles";
 import { useContext } from "react";
-import { UserContext } from "./../../contexts/user";
+import { UserContext } from "../../contexts/user";
 import { MdOutlineAdd } from "react-icons/md";
 import { TechContext } from "../../contexts/tech";
 import ModalUpdate from "../../modal/ModalUpdate";
