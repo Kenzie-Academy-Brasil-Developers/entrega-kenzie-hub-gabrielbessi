@@ -11,20 +11,16 @@ export interface iTechs {
 }
 
 const AddModal = () => {
-  const {
-    id = "modal",
-    onFormRegistration,
-    setModalIsOpen,
-  } = useContext(TechContext);
+  const { onFormRegistration, setModalIsOpen } = useContext(TechContext);
 
   const { register, handleSubmit } = useForm<iTechs>();
 
   function handleOutSideClick(event: any) {
-    if (event.target.id === id) setModalIsOpen(false);
+    if (event.target.id === "modal") setModalIsOpen(false);
   }
 
   return (
-    <ModalRegistrationTechs id={id} onClick={handleOutSideClick}>
+    <ModalRegistrationTechs id="modal" onClick={handleOutSideClick}>
       <div className="closeModal">
         <span>Cadastrar tecnologia</span>
         <button onClick={() => setModalIsOpen(false)} className="close">
